@@ -1,4 +1,5 @@
 Ataskaita apie Kursinį Darbą
+
 Įžanga
 
 Šis projektas yra romėniškų skaičių konverteris, kuris leidžia konvertuoti skaičius tarp dešimtainės (1–3999) ir romėniškos (I, V, X ir t. t.) sistemų. Jis apima šias funkcijas:
