@@ -10,7 +10,6 @@ import csv
 # OOP Pillar 1: Abstraction (ABC)
 # ==============================================
 class NumeralConverter(ABC):
-    """Abstract base class defining the converter interface"""
     @abstractmethod
     def convert(self, value):
         pass
@@ -19,7 +18,6 @@ class NumeralConverter(ABC):
 # OOP Pillar 2: Inheritance
 # ==============================================
 class RomanToDecimalConverter(NumeralConverter):
-    """Converts Roman numerals to decimal"""
     _roman_values = {'I': 1, 'V': 5, 'X': 10, 'L': 50,
                     'C': 100, 'D': 500, 'M': 1000}
 
@@ -36,7 +34,6 @@ class RomanToDecimalConverter(NumeralConverter):
         return total
 
 class DecimalToRomanConverter(NumeralConverter):
-    """Converts decimal numbers to Roman numerals"""
     _value_map = [(1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'),
                  (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'),
                  (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')]
@@ -55,19 +52,16 @@ class DecimalToRomanConverter(NumeralConverter):
 # OOP Pillar 3: Polymorphism
 # ==============================================
 def print_conversion(converter, value):
-    """Demonstrates polymorphism - works with any NumeralConverter"""
     print(f"Converted value: {converter.convert(value)}")
 
 # ==============================================
 # OOP Pillar 4: Encapsulation
 # ==============================================
 class ConversionHistory:
-    """Manages conversion history with encapsulated data"""
     def __init__(self):
         self._history = []
 
     def add_record(self, from_val, to_val, direction):
-        """Add a conversion record"""
         self._history.append({
             'input': from_val,
             'output': to_val,
@@ -75,14 +69,12 @@ class ConversionHistory:
         })
 
     def get_history(self):
-        """Get conversion history (protected data)"""
         return self._history.copy()
 
 # ==============================================
 # Design Pattern: Singleton
 # ==============================================
 class ConverterFactory:
-    """Singleton factory for creating converters"""
     _instance = None
 
     def __new__(cls):
@@ -95,16 +87,12 @@ class ConverterFactory:
         return cls._instance
 
     def get_converter(self, converter_type):
-        """Factory method to get converter"""
         return self.converters.get(converter_type)
 
 # ==============================================
 # Composition/Agregation
 # ==============================================
-# Add these new methods to the ConversionSystem class
 class ConversionSystem:
-    # ... (existing methods remain the same)
-    """Main system that coordinates conversions and history"""
     def __init__(self):
         self.factory = ConverterFactory()
         self.history = ConversionHistory()
@@ -117,15 +105,12 @@ class ConversionSystem:
         
         result = converter.convert(value)
         
-        # Record the conversion
         if conversion_type == "roman":
             self.history.add_record(value, result, "roman")
         else:
             self.history.add_record(value, result, "decimal")
         
         return result
-
-    # ... (keep all the existing save/load methods)
 
     def save_to_csv(self, filename="conversions.csv"):
         """Save history to CSV file"""
@@ -161,7 +146,7 @@ class ConversionSystem:
         try:
             with open(filename, 'r') as file:
                 for line in file:
-                    if '→' in line:  # Simple pattern matching
+                    if '→' in line:
                         parts = line.strip().split(' → ')
                         if len(parts) == 2:
                             input_val, rest = parts
